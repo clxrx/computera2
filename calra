@@ -1,0 +1,143 @@
+#include <iostream>
+#include <iomanip>
+#include <cmath>
+using namespace std;
+//Declaring constants
+const int MAX_ARRAY_SIZE = 18;
+const int MIN_ARRAY_SIZE = 8;
+const int MAX_PIECES = 72;
+const int NOPLAYER = 0;
+const int WHITEWINS = 1;
+const int REDWINS = 2;
+const int NOONEWINS = 0;
+const int WHITESOLDIER = 1;
+const int WHITEMULE = 2;
+const int WHITEKING = 3;
+const int REDSOLDIER = 4;
+const int REDMULE = 5;
+const int REDKING = 6;
+const int WHITEPLAYER = 1;
+const int REDPLAYER = 2;
+//Declaring Functions
+void InitializeBoard(int CMCheckersBoard[MAX_ARRAY_SIZE][MAX_ARRAY_SIZE], int numRowsInBoard);
+void DisplayBoard(int CMCheckersBoard[MAX_ARRAY_SIZE][MAX_ARRAY_SIZE], int numRowsInBoard);
+int CountJumps(int CMCheckersBoard[MAX_ARRAY_SIZE][MAX_ARRAY_SIZE], int numRowsInBoard, int player, int xLocArray[], int yLocArray[]);
+int CountMove1Squares(int CMCheckersBoard[MAX_ARRAY_SIZE][MAX_ARRAY_SIZE], int numRowsInBoard, int player, int xLocArray[], int yLocArray[]);
+bool IsMove1Squares(int CMCheckersBoard[MAX_ARRAY_SIZE][MAX_ARRAY_SIZE], int numRowsInBoard, int player, int xLoc, int yLoc);
+bool IsJump(int CMCheckersBoard[MAX_ARRAY_SIZE][MAX_ARRAY_SIZE], int numRowsInBoard, int player, int xLoc, int yLoc);
+bool MakeMove(int CMCheckersBoard[MAX_ARRAY_SIZE][MAX_ARRAY_SIZE], int numRowsInBoard, int player, int fromSquareNum, int toSqaureNum, bool &jumped);
+bool CheckWin(int CMCheckersBoard[MAX_ARRAY_SIZE][MAX_ARRAY_SIZE], int numRowsInBoard);
+bool CheckList(int inArray1[], int inArray2[], int xIndex, int yIndex);
+
+int main()
+{
+	//Declaring local array
+	int myCMCCheckersBoard[MAX_ARRAY_SIZE][MAX_ARRAY_SIZE] = { 0 };
+	int xIndicesMove[MAX_PIECES] = { '\0' };
+	int yIndicesMove[MAX_PIECES] = { '\0' };
+	int xIndicesJump[MAX_PIECES] = { '\0' };
+	int yIndicesJump[MAX_PIECES] = { '\0' };
+	//Declaring local variables
+	const int numRowsBoardMAX = 18;
+	const int numRowsBoardMIN = 8;
+	const int MAXtries = 3;
+	int counter = 0;
+	int numRowsInBoard = 0;
+	double remainder = 0.0;
+	for (counter = 0; counter < 3; counter++)
+	{
+		cout << "Enter the number of squares along each edge of the board" << endl;
+		cin >> numRowsInBoard;
+		remainder = numRowsInBoard % 2;
+		if (!cin >> numRowsInBoard) //even if double is put, will still run 
+		{
+			cout << "ERROR: Board size is not an integer." << endl;
+			cin.clear();
+			cin.ignore();
+			if (counter == 2)
+			{
+				cout << "ERROR: Too many errors entering the size of the board. Terminating Game";
+				return 1;
+			}
+		}
+		else if (numRowsInBoard < numRowsBoardMIN)
+		{
+			cout << "ERROR: Board size too small. The correct range for board size is 8<=Board Size<=18." << endl;
+			if (counter == 2)
+			{
+				cout << "ERROR: Too many errors entering the size of the board. Terminating Game";
+				return 1;
+			}
+		}
+		else if (numRowsInBoard > numRowsBoardMAX)
+		{
+			cout << "ERROR: Board size too big. The correct range for board size is 8<=Board Size<=18." << endl;
+			if (counter == 2)
+			{
+				cout << "ERROR: Too many errors entering the size of the board. Terminating Game";
+				return 1;
+			}
+		}
+		else if (remainder != 0)
+		{
+			cout << "ERROR: Board size odd." << endl;
+			if (counter == 2)
+			{
+				cout << "ERROR: Too many errors entering the size of the board. Terminating Game";
+				return 1;
+			}
+		}
+		else
+		{
+			break;
+		}
+	}
+
+
+	return 0;
+}
+
+/*
+void InitializeBoard(int CMCheckersBoard[MAX_ARRAY_SIZE][MAX_ARRAY_SIZE], int numRowsInBoard);
+{
+	//initialize later in main 
+	int j = 0;
+	int i = 0;
+	for (i = 0; i < numRowsInBoard; i++)
+	{
+		for (j = 0; j < numRowsInBoard; j++)
+		{
+			if (CMCheckersBoard[i][j] )
+			{
+				cout << CMCheckersBoard[i][j]
+			}
+			else if (CMCheckersBoard[i][j] = WHITESOLDIER)
+			{
+				//white soldier 
+			}
+			else if (CMCheckersBoard[i][j] = WHITEMULE)
+			{
+				//white mule
+			}
+			else if (CMCheckersBoard[i][j] = WHITEKING)
+			{
+				//white king
+			}
+			else if (CMCheckersBoard[i][j] = REDSOLDIER)
+			{
+				//red soldier
+			}
+			else if (CMCheckersBoard[i][j] = REDMULE)
+			{
+				//red mule
+			}
+			else if (CMCheckersBoard[i][j] = REDKING)
+			{
+				//red king 
+			}
+		}
+	}
+
+	
+}
+*/
