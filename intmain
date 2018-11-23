@@ -1,0 +1,99 @@
+#include <iostream>
+#include <iomanip>
+#include <cstdlib>
+#include <fstream>
+using namespace std;
+ 
+const int MAX_ARRAY_SIZE = 18.0;
+const int MIN_ARRAY_SIZE = 8.0;
+const int MAX_PIECES = 72; //
+const int NOPLAYER = 0;
+const int WHITEWINS = 1; //
+const int REDWINS = 2;
+const int NOONEWINS = 0; //
+const int WHITESOILDIER = 1;
+const int WHITEMULE = 2;
+const int WHITEKING = 3;
+const int REDSOILDER = 4;
+const int REDMULE = 5;
+const int REDKING = 6;
+const int WHITEPLAYER = 1;
+const int REDPLAYER = 2;
+ 
+void InitializeBoard( int CMCheckersBoard[MAX_ARRAY_SIZE][MAX_ARRAY_SIZE], int numRowsInBoard );
+void DisplayBoard( int CMCheckersBoard[MAX_ARRAY_SIZE][MAX_ARRAY_SIZE], int numRowsInBoard);
+int CountJumps( int CMCheckersBoard[MAX_ARRAY_SIZE][MAX_ARRAY_SIZE], int numRowsInBoard, int player, int xLocArray[], int yLocArray[] );
+bool CheckList( int inArray1[], int inArray2[], int xIndex, int yIndex);
+int CountMove1Squares( int CMCheckersBoard[MAX_ARRAY_SIZE][MAX_ARRAY_SIZE], int numRowsInBoard, int player, int xLocArray[],  int yLocArray[] );
+bool IsMove1Square( int CMCheckersBoard[MAX_ARRAY_SIZE][MAX_ARRAY_SIZE], int numRowsInBoard, int player, int xLoc, int yLoc);
+bool IsJump( int CMCheckersBoard[MAX_ARRAY_SIZE][MAX_ARRAY_SIZE],int numRowsInBoard, int player, int xLoc, int yLoc);
+bool MakeMove( int CMCheckersBoard[MAX_ARRAY_SIZE][MAX_ARRAY_SIZE], int numRowsInBoard, int player, int fromSquareNum, int toSquareNum, bool &jumped );
+bool CheckWin(int CMCheckersBoard[MAX_ARRAY_SIZE][MAX_ARRAY_SIZE], int numRowsInBoard);
+ 
+int main()
+{
+    int checker[MAX_ARRAY_SIZE][MAX_ARRAY_SIZE];
+    int xIndicesMove[MAX_PIECES];
+    int yIndicesMove[MAX_PIECES];
+    int xIndicesJump[MAX_PIECES];
+    int yIndicesJump[MAX_PIECES];
+ 
+    const int MAXROWS = 18;
+    const int MINROWS = 8;
+    const int MAXTRIES = 3;
+ 
+    int numrows = 0;
+    int tries = 1;
+    int index = 0;
+ 
+    cout << "Enter the number of squares along each edge of the board" << endl;
+ 
+    do
+    {
+        if ( !(cin >> numrows) )
+        {
+            cerr << "ERROR: Board size is not an intger";
+            cerr << "\n" << MINROWS << " <= number of squares <= " << MAXROWS << endl;
+            cin.clear();
+            cin.ignore(1000, '\n');
+        }
+        else if( numrows < MINROWS )
+        {
+            cerr << "ERROR: Board size too small";
+            cerr << "\n" << MINROWS << " <= number of squares <= " << MAXROWS << endl;
+            cin.clear();
+            cin.ignore(1000, '\n');
+           
+        }
+        else if( numrows > MAXROWS )
+        {
+            cerr << "ERROR: Board size too big";
+            cerr << "\n" << MINROWS << " <= number of squares <= " << MAXROWS << endl;
+            cin.clear();
+            cin.ignore(1000, '\n');
+        }
+        else if( (numrows%2) == 1 )
+        {
+            cerr << "ERROR: Board size odd";
+            cerr << "\n" << MINROWS << " <= number of squares <= " << MAXROWS << endl;
+            cin.clear();
+            cin.ignore(1000, '\n');
+        }
+        else
+        {
+            break;
+            tries = 1;
+        }
+        tries ++;
+    } while ( tries <= MAXTRIES );
+ 
+    if ( tries > MAXTRIES )
+    {
+        cerr << "ERROR: too many errors enterng the size of the board";
+        return 1;
+    }
+    return 0;
+ 
+}
+ 
+void InitializeBoard( int CMCheckersBoard[MAX_ARRAY_SIZE][MAX_ARRAY_SIZE], int numRowsInBoard )
