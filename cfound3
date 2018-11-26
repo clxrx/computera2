@@ -1,0 +1,396 @@
+bool IsJump( int CMCheckersBoard[MAX_ARRAY_SIZE][MAX_ARRAY_SIZE], int numRowsInBoard, int player, int xLoc, int yLoc)
+{
+	//this function examines whether the checker on CMCheckersBoacrd[yLoc][xLoc] can make a jump 
+	bool moveA=false;
+	bool moveB=false;
+	bool moveC=true;
+	bool moveD=true;
+	bool AorB=false;
+	bool CorD=false;
+	bool TrueOrFalse=false;
+	if(player==1) //considering white checkers
+	{
+		if(xLoc==0) //cylindrical case(forward): jumping to the right at the edge
+		{
+			bool move1=false;
+			bool move2=false;
+			if(CMCheckersBoard[yLoc+1][numRowsInBoard-1]==4||CMCheckersBoard[yLoc+1][numRowsInBoard-1]==5||CMCheckersBoard[yLoc+1][numRowsInBoard-1]==6)
+				move1=true;
+			else
+				move1=false;
+			if(CMCheckersBoard[yLoc+2][numRowsInBoard-2]==0)
+				move2=true;
+			else
+				move2=false;
+			if(move1==true && move2==true)
+				moveA=true;
+		}
+		else if(xLoc==numRowsInBoard-2) //cylindrical Case(forward): jumping to the right at one square from the edge
+		{
+			bool move1=false;
+			bool move2=false;
+			if(CMCheckersBoard[yLoc+1][0]==4||CMCheckersBoard[yLoc+1][0]==5||CMCheckersBoard[yLoc+1][0]==6)
+				move1=true;
+			else
+				move1=false;
+			if(CMCheckersBoard[yLoc+2][1]==0)
+				move2=true;
+			else
+				move2=false;
+			if(move1==true && move2==true)
+				moveA=true;
+		}
+		else //non cylindrical case(forward): jumping diagnally right
+		{
+			bool move1=false;
+			bool move2=false;
+			if(CMCheckersBoard[yLoc+1][xLoc-1]==4||CMCheckersBoard[yLoc+1][xLoc-1]==5||CMCheckersBoard[yLoc+1][xLoc-1]==6)
+				move1=true;
+			else 
+				move1=false;
+			if(CMCheckersBoard[yLoc+2][xLoc-2]==0)
+				move2=true;
+			else
+				move2=false;
+			if(move1==true && move2==true)
+				moveA=true;
+		}
+		if(xLoc==numRowsInBoard-1) //cylindrical case(forward): jumping left diagnally at the edge
+		{
+			bool move1=false;
+			bool move2=false;
+			if(CMCheckersBoard[yLoc+1][0]==4||CMCheckersBoard[yLoc+1][0]==5||CMCheckersBoard[yLoc+1][0]==6)
+				move1=true;
+			else 
+				move1=false;
+			if(CMCheckersBoard[yLoc+2][1]==0)
+				move2=true;
+			else
+				move2=false;
+			if(move1==true && move2==true)
+				moveB=true;
+		}
+		else if(xLoc==numRowsInBoard-2) // cynlindrical case(forward): jumping left diagnally at one square away from the edge
+		{
+			bool move1=false;
+			bool move2=false;
+			if(CMCheckersBoard[yLoc+1][numRowsInBoard-1]==4||CMCheckersBoard[yLoc+1][numRowsInBoard-1]==5||CMCheckersBoard[yLoc+1][numRowsInBoard-1]==6)
+				move1=true;
+			else
+				move1=false;
+			if(CMCheckersBoard[yLoc+2][0]==0)
+				move2=true;
+			else
+				move2=false;
+			if (move1==true && move2==true)
+				moveB=true;
+		}
+		else //non cylindrical case(forward): jumping diagnally left
+		{
+			bool move1=false;
+			bool move2=false;
+			if(CMCheckersBoard[yLoc+1][xLoc+1]==4||CMCheckersBoard[yLoc+1][xLoc+1]==5||CMCheckersBoard[yLoc+1][xLoc+1]==6)
+				move1=true;
+			else
+				move1=false;
+			if(CMCheckersBoard[yLoc+2][xLoc+2]==0)
+				move2=true;
+			else
+				move2=false;
+			if(move1==true && move2==true)
+				moveB=true;
+		}
+		if (moveA==true||moveB==true)
+			AorB=true;
+		if(CMCheckersBoard[yLoc][xLoc]==3) //only when the white checker is king
+		{
+			if(xLoc==numRowsInBoard-1) //cylindrical case (backward): jumping left at the edge
+			{
+				bool move1=false;
+				bool move2=false;
+				if(CMCheckersBoard[yLoc-1][0]==4||CMCheckersBoard[yLoc-1][0]==5||CMCheckersBoard[yLoc-1][0]==6)
+					move1=true;
+				else
+					move1=false;
+				if(CMCheckersBoard[yLoc-2][1]==0)
+					move2=true;
+				else
+					move2=false;
+				if( move1==true && move2==true)
+					moveC=true;
+			}
+			else if(xLoc==numRowsInBoard-2) //cylindrical case(backward): jumping left at one square away from the edge
+			{
+				bool move1=false;
+				bool move2=false;
+				if(CMCheckersBoard[yLoc-1][numRowsInBoard-1]==4||CMCheckersBoard[yLoc-1][numRowsInBoard-1]==5||CMCheckersBoard[yLoc-1][numRowsInBoard-1]==6)
+					move1=true;
+				else 
+					move1=false;
+				if(CMCheckersBoard[yLoc-2][0]==0)
+					move2=true;
+				else
+					move2=false;
+				if(move1==true && move2==true)
+					moveC=true;
+			}
+			else //non cylindrical case(backward): jumping left
+			{
+				bool move1=false;
+				bool move2=false;
+				if(CMCheckersBoard[yLoc-1][xLoc+1]==4||CMCheckersBoard[yLoc-1][xLoc+1]==5||CMCheckersBoard[yLoc-1][xLoc+1]==6)
+					move1=true;
+				else
+					move1=false;
+				if(CMCheckersBoard[yLoc-2][xLoc+2]==0)
+					move2=true;
+				else
+					move2=false;
+				if (move1==true && move2==true)
+					moveC=true;
+			}
+			if(xLoc==0) //cylindrical case (backward): jumping right at the edge
+			{
+				bool move1=false;
+				bool move2=false;
+				if(CMCheckersBoard[yLoc-1][numRowsInBoard-1]==4||CMCheckersBoard[yLoc-1][numRowsInBoard-1]==5||CMCheckersBoard[yLoc-1][numRowsInBoard-1]==6)
+					move1=true;
+				else
+					move1=false;
+				if(CMCheckersBoard[yLoc-2][numRowsInBoard-2]==0)
+					move2=true;
+				else
+					move2=false;
+				if( move1==true && move2==true)
+					moveD=true;
+			}
+			else if(xLoc==1) //cylindrical case (backward): jumping right at one square away from the edge
+			{
+				bool move1=false;
+				bool move2=false;
+				if(CMCheckersBoard[yLoc-1][0]==4||CMCheckersBoard[yLoc-1][0]==5||CMCheckersBoard[yLoc-1][0]==6)
+					move1=true;
+				else
+					move1=false;
+				if(CMCheckersBoard[yLoc-2][numRowsInBoard-1]==0)
+					move2=true;
+				else
+					move2=false;
+				if( move1==true && move2==true)
+					moveD=true;
+			}
+			else // non cylindrical case (backward): jumping right 
+			{
+				bool move1=false;
+				bool move2=false;
+				if(CMCheckersBoard[yLoc-1][xLoc-1]==4||CMCheckersBoard[yLoc-1][xLoc-1]==5||CMCheckersBoard[yLoc-1][xLoc-1]==6)
+					move1=true;
+				else
+					move1=false;
+				if(CMCheckersBoard[yLoc-2][xLoc-2]==0)
+					move2=true;
+				else
+					move2=false;
+				if( move1==true && move2==true)
+					moveD=true;
+			}
+			if(moveC==true || moveD==true)
+				CorD=true;
+			if(AorB==true && CorD==true)
+				TrueOrFalse=true;
+		}
+	}
+	else //considering red checkers
+	{
+		if(xLoc==numRowsInBoard-1) //cylindrical case: 1 space diagonally forward and toward the right side of the board.
+		{
+			bool move1=false;
+			bool move2=false;
+			if(CMCheckersBoard[yLoc-1][0]==1||CMCheckersBoard[yLoc-1][0]==2||CMCheckersBoard[yLoc-1][0]==3)
+				move1=true;
+			else
+				move1=false;
+			if(CMCheckersBoard[yLoc-2][1]==0)
+				move2=true;
+			else
+				move2=false;
+			if(move1==true && move2==true)
+				moveA=true;
+		}
+		else if(xLoc==numRowsInBoard-2) //cylindrical Case(forward): when the checker is located at [numRowsInBoard-2] 
+		{
+			bool move1=false;
+			bool move2=false;
+			if(CMCheckersBoard[yLoc-1][numRowsInBoard-1]==1||CMCheckersBoard[yLoc-1][numRowsInBoard-1]==2||CMCheckersBoard[yLoc-1][numRowsInBoard-1]==3)
+				move1=true;
+			else
+				move1=false;
+			if(CMCheckersBoard[yLoc-2][0]==0)
+				move2=true;
+			else
+				move2=false;
+			if(move1==true && move2==true)
+				moveA=true;
+		}
+		else //non cylindrical case(forward): jumping diagnally right
+		{
+			bool move1=false;
+			bool move2=false;
+			if(CMCheckersBoard[yLoc-1][xLoc+1]==1||CMCheckersBoard[yLoc-1][xLoc+1]==2||CMCheckersBoard[yLoc-1][xLoc+1]==3)
+				move1=true;
+			else 
+				move1=false;
+			if(CMCheckersBoard[yLoc-2][xLoc+2]==0)
+				move2=true;
+			else
+				move2=false;
+			if(move1==true && move2==true)
+				moveA=true;
+		}
+		if(xLoc==0) //cylindrical case(forward): jumping left diagnally(red checker at the left edge of the board) 
+		{
+			bool move1=false;
+			bool move2=false;
+			if(CMCheckersBoard[yLoc-1][numRowsInBoard-1]==1||CMCheckersBoard[yLoc-1][numRowsInBoard-1]==2||CMCheckersBoard[yLoc-1][numRowsInBoard-1]==3)
+				move1=true;
+			else 
+				move1=false;
+			if(CMCheckersBoard[yLoc-2][numRowsInBoard-2]==0)
+				move2=true;
+			else
+				move2=false;
+			if(move1==true && move2==true)
+				moveB=true;
+		}
+		else if(xLoc==1) // cynlindrical case(forward): jumping left diagnally (red checker at one square away from the left edge of the board)
+		{
+			bool move1=false;
+			bool move2=false;
+			if(CMCheckersBoard[yLoc-1][0]==1||CMCheckersBoard[yLoc-1][0]==2||CMCheckersBoard[yLoc-1][0]==3)
+				move1=true;
+			else
+				move1=false;
+			if(CMCheckersBoard[yLoc-2][numRowsInBoard-1]==0)
+				move2=true;
+			else
+				move2=false;
+			if (move1==true && move2==true)
+				moveB=true;
+		}
+		else //non cylindrical case(forward): jumping diagnally left
+		{
+			bool move1=false;
+			bool move2=false;
+			if(CMCheckersBoard[yLoc-1][xLoc-1]==1||CMCheckersBoard[yLoc-1][xLoc-1]==2||CMCheckersBoard[yLoc-1][xLoc-1]==3)
+				move1=true;
+			else
+				move1=false;
+			if(CMCheckersBoard[yLoc-2][xLoc-2]==0)
+				move2=true;
+			else
+				move2=false;
+			if(move1==true && move2==true)
+				moveB=true;
+		}
+		if (moveA==true||moveB==true)
+			AorB=true;
+		if(CMCheckersBoard[yLoc][xLoc]==6) //only when the red checker is king
+		{
+			if(xLoc==0) //cylindrical case (backward): jumping left at the edge
+			{
+				bool move1=false;
+				bool move2=false;
+				if(CMCheckersBoard[yLoc+1][numRowsInBoard-1]==1||CMCheckersBoard[yLoc+1][numRowsInBoard-1]==2||CMCheckersBoard[yLoc+1][numRowsInBoard-1]==3)
+					move1=true;
+				else
+					move1=false;
+				if(CMCheckersBoard[yLoc+2][numRowsInBoard-2]==0)
+					move2=true;
+				else
+					move2=false;
+				if( move1==true && move2==true)
+					moveC=true;
+			}
+			else if(xLoc==1) //cylindrical case(backward): jumping left at one square away from the edge
+			{
+				bool move1=false;
+				bool move2=false;
+				if(CMCheckersBoard[yLoc+1][0]==1||CMCheckersBoard[yLoc+1][0]==2||CMCheckersBoard[yLoc+1][0]==3)
+					move1=true;
+				else 
+					move1=false;
+				if(CMCheckersBoard[yLoc+2][numRowsInBoard-1]==0)
+					move2=true;
+				else
+					move2=false;
+				if(move1==true && move2==true)
+					moveC=true;
+			}
+			else //non cylindrical case(backward): jumping left
+			{
+				bool move1=false;
+				bool move2=false;
+				if(CMCheckersBoard[yLoc+1][xLoc-1]==1||CMCheckersBoard[yLoc+1][xLoc-1]==2||CMCheckersBoard[yLoc+1][xLoc-1]==3)
+					move1=true;
+				else
+					move1=false;
+				if(CMCheckersBoard[yLoc+2][xLoc-2]==0)
+					move2=true;
+				else
+					move2=false;
+				if (move1==true && move2==true)
+					moveC=true;
+			}
+			if(xLoc==numRowsInBoard-1) //cylindrical case (backward): jumping right at the edge
+			{
+				bool move1=false;
+				bool move2=false;
+				if(CMCheckersBoard[yLoc+1][0]==1||CMCheckersBoard[yLoc+1][0]==2||CMCheckersBoard[yLoc+1][0]==3)
+					move1=true;
+				else
+					move1=false;
+				if(CMCheckersBoard[yLoc+2][1]==0)
+					move2=true;
+				else
+					move2=false;
+				if( move1==true && move2==true)
+					moveD=true;
+			}
+			else if(xLoc==numRowsInBoard-2) //cylindrical case (backward): jumping right at one square away from the edge
+			{
+				bool move1=false;
+				bool move2=false;
+				if(CMCheckersBoard[yLoc+1][numRowsInBoard-2]==1||CMCheckersBoard[yLoc+1][numRowsInBoard-2]==2||CMCheckersBoard[yLoc+1][numRowsInBoard-2]==3)
+					move1=true;
+				else
+					move1=false;
+				if(CMCheckersBoard[yLoc+2][0]==0)
+					move2=true;
+				else
+					move2=false;
+				if( move1==true && move2==true)
+					moveD=true;
+			}
+			else // non cylindrical case (backward): jumping right 
+			{
+				bool move1=false;
+				bool move2=false;
+				if(CMCheckersBoard[yLoc+1][xLoc+1]==1||CMCheckersBoard[yLoc+1][xLoc+1]==2||CMCheckersBoard[yLoc+1][numRowsInBoard+1]==3)
+					move1=true;
+				else
+					move1=false;
+				if(CMCheckersBoard[yLoc+2][numRowsInBoard+2]==0)
+					move2=true;
+				else
+					move2=false;
+				if( move1==true && move2==true)
+					moveD=true;
+			}
+			if(moveC==true || moveD==true)
+				CorD=true;
+			if(AorB==true && CorD==true)
+				TrueOrFalse=true;
+		}
+	}
+	return TrueOrFalse;
+}
