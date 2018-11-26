@@ -1,0 +1,97 @@
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+const int MAX_ARRAY_SIZE = 18;
+const int MIN_ARRAY_SIZE = 8;
+const int MAX_PIECES = 72; 
+const int NOPLAYER = 0;
+const int WHITEWINS = 0;
+const int REDWINS = 0;
+const int NOONEWINS = 0;
+const int WHITESOLDIER = 1;
+const int WHITEMULE = 2;
+const int WHITEKING = 3;
+const int REDSOLDIER = 4;
+const int REDMULE = 5;
+const int REDKING = 6;
+const int WHITEPLAYER = 1;
+const int REDPLAYER = 2;
+
+void InitializeBoard(int CMCheckersBoard[MAX_ARRAY_SIZE][MAX_ARRAY_SIZE], int numRowsInBoard);
+
+void DisplayBoard(int CMCheckersBoard[MAX_ARRAY_SIZE][MAX_ARRAY_SIZE], 
+int numRowsInBoard);
+
+int CountJumps(int CMCheckersBoard[MAX_ARRAY_SIZE][MAX_ARRAY_SIZE], 
+int numRowsInBoard, int player, int xLocArray[], int yLocArray[]);
+
+bool CheckList(int inArray1[], int inArray2[], int xIndex, int yIndex);
+
+int CountMove1Squares(int CMCheckersBoard[MAX_ARRAY_SIZE][MAX_ARRAY_SIZE], int numRowsInBoard, int player, int xLocArray[], int yLocArray[]);
+
+bool IsMove1Square(int CMCheckersBoard[MAX_ARRAY_SIZE][MAX_ARRAY_SIZE], int numRowsInBoard, int player, int xLoc, int yLoc); 
+
+bool IsJump(int CMCheckersBoard[MAX_ARRAY_SIZE][MAX_ARRAY_SIZE], 
+int numRowsInBoard, int player, int xLoc, int yLoc); 
+
+bool MakeMove(int CMCheckersBoard[MAX_ARRAY_SIZE][MAX_ARRAY_SIZE], 
+int numRowsInBoard, int player, int fromSquareNum, int toSquareNum, bool &jumped);
+
+bool CheckWin(int CMCheckersBoard[MAX_ARRAY_SIZE][MAX_ARRAY_SIZE], int numRowsInBoard);
+
+int numRowsInBoard;
+int errorCounter = 0;
+
+int main() 
+{
+  int myCMCheckersBoard[MAX_ARRAY_SIZE][MAX_ARRAY_SIZE]={0}; //see #1
+  int xIndicesMove[MAX_PIECES]; //see #2
+  int yIndicesMove[MAX_PIECES]; //see #2
+  int xIndicesJump[MAX_PIECES]; //see #3
+  int yIndicesJump[MAX_PIECES]; //see #3
+  
+  do 
+  {
+  cout << "Enter the number of squares along each edge of the board" << endl;
+  cin >> numRowsInBoard;
+  if (numRowsInBoard<=18 && numRowsInBoard>=8)
+  {
+    break;
+  }
+  else if (numRowsInBoard<8)
+  {
+    cerr << "ERROR: Board size too small." << endl;
+    errorCounter++;
+  }
+  else if (numRowsInBoard>18)
+  {
+    cerr << "ERROR: Board size too large." << endl;
+    errorCounter++;
+  }
+  else if (numRowsInBoard % 2 == 1)
+  {
+    cerr << "ERROR: Board size odd." << endl;
+    errorCounter++;
+  }
+  else if (!cin>>numRowsInBoard)
+  {
+    cerr << "ERROR: Board size is not an integer." << endl;
+    errorCounter++;
+  }
+  }
+  while(errorCounter<3);
+  
+  if (errorCounter>=3)
+  {
+    cerr << "ERROR: Too many errors entering the size of the board." << endl;
+    return 1;
+  }
+
+
+  for (int i = numRowsInBoard - 1; i >= 0; i--) 
+    cout << myCMCheckersBoard[i][i];
+    
+}
+
+
